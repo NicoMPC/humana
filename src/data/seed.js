@@ -24,7 +24,7 @@ export const USERS_DEMO = [
 export const SETTINGS_DEMO = {
   delai_relance_jours: 10,
   delai_photos_semaines: 6,
-  securite: { code: 'Saloncin17!' },
+  securite: { code: 'Humanabeta' },
   // Entretien de mise en route (2026-09-14) : une fois pour la boutique
   // entière (pas par utilisatrice), voir `components/onboarding/`. Tant que
   // `complete` est faux, l'appli entière est remplacée par l'entretien ;
