@@ -10,7 +10,7 @@ import { useStockReminderAtStartup } from '../../hooks/useStockReminder';
 import { NewDiagnosticModal } from '../diagnostic/NewDiagnosticModal';
 import { BugReportModal } from './BugReportModal';
 import { TutorialBanner } from './TutorialBanner';
-import { hasSeenOnboarding, OnboardingWizard } from './OnboardingWizard';
+import { OnboardingFlow, FrozenScreen } from '../onboarding/OnboardingFlow';
 
 const NAV = [
   { to: '/', label: 'Accueil', icon: 'fa-solid fa-house', end: true },
@@ -42,18 +42,12 @@ export function AppShell({ children }) {
   const [bugOpen, setBugOpen] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [onboardingOpen, setOnboardingOpen] = useState(false);
+  const onboarding = useStore((s) => s.settings.onboarding);
   const tutorielActif = useUI((s) => s.tutorielActif);
   const toggleTutoriel = useUI((s) => s.toggleTutoriel);
 
   useRelancesAtStartup(user);
   useStockReminderAtStartup(user);
-
-  useEffect(() => {
-    if (!user || location.pathname !== '/' || hasSeenOnboarding(user.id)) return undefined;
-    const t = setTimeout(() => setOnboardingOpen(true), 900);
-    return () => clearTimeout(t);
-  }, [user, location.pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -65,6 +59,13 @@ export function AppShell({ children }) {
   const dueCount = useMemo(() => visibleDiagnostics({ diagnostics }, user).filter((d) => isRelanceDue(d)).length, [diagnostics, user]);
   const title = pageLabel(location.pathname);
   const admin = isPatronne(user);
+
+  // Entretien de mise en route (voir components/onboarding/) : tant qu'il
+  // n'est pas terminé, remplace tout l'appli — une fois terminé et « figé »,
+  // remplace tout par l'écran de remerciement, jusqu'à un futur passage en
+  // V1 qui repassera `locked` à false à la main.
+  if (!onboarding?.complete) return <OnboardingFlow />;
+  if (onboarding.locked) return <FrozenScreen />;
 
   const navLink = (item) => (
     <NavLink key={item.to} to={item.to} end={item.end} className={({ isActive }) => `nav-item ${isActive ? 'is-active' : ''}`}>
@@ -168,7 +169,6 @@ export function AppShell({ children }) {
 
       <NewDiagnosticModal open={newDiag} onClose={() => setNewDiag(false)} />
       <BugReportModal open={bugOpen} onClose={() => setBugOpen(false)} />
-      {user && <OnboardingWizard open={onboardingOpen} onClose={() => setOnboardingOpen(false)} user={user} />}
     </div>
   );
 }

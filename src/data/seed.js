@@ -25,6 +25,20 @@ export const SETTINGS_DEMO = {
   delai_relance_jours: 10,
   delai_photos_semaines: 6,
   securite: { code: 'Saloncin17!' },
+  // Entretien de mise en route (2026-09-14) : une fois pour la boutique
+  // entière (pas par utilisatrice), voir `components/onboarding/`. Tant que
+  // `complete` est faux, l'appli entière est remplacée par l'entretien ;
+  // une fois terminé, `locked` fige l'appli sur un écran de remerciement
+  // jusqu'à ce qu'un futur passage en V1 repasse `locked` à `false` à la main.
+  onboarding: {
+    complete: false, locked: true, step: 0,
+    reponses: {
+      delai_photos_semaines: 6, delai_relance_jours: 7, relance_anticipee_ok: true,
+      plusieurs_diag_meme_type_ok: true, besoin_photos: true, besoin_notes_libres: true,
+      modalites: ['boutique', 'visio'], telephone_obligatoire: false, champs_stricts_ok: true,
+      stock_rappel_semaines: 1, signature: 'L’équipe Hu’mana',
+    },
+  },
   // Date volontairement ancienne (> 7 jours) pour que la démo montre tout de
   // suite l'alerte « stock à rafraîchir » et invite à essayer l'import.
   stock: { dernierImport: daysFromToday(-9), historique: [] },
@@ -53,6 +67,11 @@ export const SETTINGS_DEMO = {
       sujet: 'Comment se passe votre routine, {prenom} ?',
       corps:
         'Bonjour {prenom},\n\nCela fait {delai_relance} que vous avez commencé votre routine. Comment vous sentez-vous ? Avez-vous des questions sur l’application des produits ?\n\nN’hésitez pas à m’envoyer une photo ou à passer à la boutique : nous ajusterons ensemble si besoin.\n\nBelle journée,\n{praticienne}\n{boutique}',
+    },
+    lifestyle: {
+      sujet: 'Vos conseils bien-être personnalisés – Hu’mana',
+      corps:
+        'Bonjour {prenom},\n\nEn complément de votre routine, voici quelques conseils bien-être personnalisés, en pièce jointe.\n\nCe sont de petites habitudes simples à intégrer à votre rythme, sans pression : chaque petit pas compte.\n\nÀ très vite,\n{praticienne}\n{boutique}',
     },
   },
 };

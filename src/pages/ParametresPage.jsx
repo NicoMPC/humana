@@ -3,7 +3,6 @@ import { useCurrentUser, useStore } from '../store/useStore';
 import { isPatronne } from '../store/selectors';
 import { toast } from '../store/useUI';
 import { Button, Field, Input, Notice, Textarea, Tabs } from '../components/ui';
-import { QuestionsEditorModal } from '../components/settings/QuestionsEditorModal';
 
 export default function ParametresPage() {
   const user = useCurrentUser();
@@ -15,12 +14,10 @@ export default function ParametresPage() {
       <div className="page-head"><div><div className="eyebrow">Configuration</div><h1>Paramètres</h1></div></div>
       <Tabs value={tab} onChange={setTab} items={[
         { value: 'general', label: 'Général', icon: 'fa-solid fa-sliders' },
-        { value: 'questions', label: 'Questionnaires', icon: 'fa-regular fa-circle-question' },
         admin && { value: 'entreprise', label: 'Boutique', icon: 'fa-solid fa-shop' },
       ].filter(Boolean)} />
       <div className="mt-3">
         {tab === 'general' && <GeneralTab admin={admin} />}
-        {tab === 'questions' && <QuestionsTab />}
         {tab === 'entreprise' && admin && <EntrepriseTab />}
       </div>
     </>
@@ -102,24 +99,6 @@ function ProtectedTemplateField({ id, value, onCommit, multiline = false, rows }
   return multiline
     ? <Textarea id={id} rows={rows} value={draft} onChange={(e) => setDraft(e.target.value)} onBlur={handleBlur} />
     : <Input id={id} value={draft} onChange={(e) => setDraft(e.target.value)} onBlur={handleBlur} />;
-}
-
-function QuestionsTab() {
-  const [editing, setEditing] = useState(null);
-  return (
-    <div className="stack-lg">
-      <div className="grid-2">
-        {[{ type: 'peau', label: 'Questionnaire peau', icon: 'fa-solid fa-spa' }, { type: 'cheveux', label: 'Questionnaire cheveux', icon: 'fa-solid fa-wind' }].map((t) => (
-          <div key={t.type} className="card">
-            <div className="card-title-row mb-2"><span className="card-icon"><i className={t.icon} /></span><h3>{t.label}</h3></div>
-            <p className="small muted mb-2">Ajoutez, réordonnez ou retirez des questions présentées à la praticienne.</p>
-            <Button variant="soft" icon="fa-solid fa-pen" onClick={() => setEditing(t.type)}>Modifier les questions</Button>
-          </div>
-        ))}
-      </div>
-      <QuestionsEditorModal open={!!editing} type={editing} onClose={() => setEditing(null)} />
-    </div>
-  );
 }
 
 function EntrepriseTab() {

@@ -152,6 +152,37 @@
 @media (prefers-reduced-motion: reduce) {
   .login-visual .blob, .intro-glow, .intro-petal { animation: none; }
 }
+
+/* Entretien de mise en route (onboarding, voir components/onboarding/) */
+.onboarding-flow {
+  position: fixed; inset: 0; z-index: 998; overflow-y: auto;
+  background: var(--bg); display: flex; flex-direction: column; align-items: center;
+  padding: var(--sp-8) var(--sp-4);
+}
+.onboarding-progress-wrap { width: 100%; max-width: 620px; margin-bottom: var(--sp-4); display: grid; gap: .4rem; }
+.onboarding-card {
+  width: 100%; max-width: 620px; background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: var(--sp-8); margin: auto 0;
+  animation: fadeUp var(--dur-slow) var(--ease) both;
+}
+.onboarding-card h2 { margin: 0; }
+.onboarding-nav { display: flex; justify-content: space-between; gap: var(--sp-3); }
+.onboarding-welcome { text-align: center; display: grid; justify-items: center; gap: var(--sp-3); }
+.onboarding-logo { width: 96px; margin-bottom: var(--sp-2); }
+.onboarding-summary-row {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3);
+  padding: .6rem .2rem; border-bottom: 1px solid var(--border);
+}
+.onboarding-summary-row:last-child { border-bottom: 0; }
+
+.onboarding-frozen {
+  background: linear-gradient(160deg, var(--sage-700), var(--sage-500) 60%, var(--sage-400));
+  justify-content: center; align-items: center;
+}
+.onboarding-thanks { text-align: center; color: #fff; animation: introMarkIn 900ms var(--ease) both; }
+.onboarding-thanks-mark { width: 120px; filter: drop-shadow(0 14px 28px rgba(38,42,35,.22)); margin-bottom: var(--sp-4); }
+.onboarding-thanks h1 { color: #fff; margin: 0 0 var(--sp-3); }
+.onboarding-thanks p { color: rgba(255,255,255,.88); font-size: var(--fs-lg); line-height: 1.6; }
 .account {
   display: flex; align-items: center; gap: .9rem; padding: .85rem 1rem; text-align: left;
   border: 1.5px solid var(--border); border-radius: var(--r-lg); background: var(--bg-elevated);
