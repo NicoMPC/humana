@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Hu'mana Boutique
+Comment=Ouvrir l'application Hu'mana Boutique (version active) en local
+Exec=bash -c 'cd "/home/liline/Bureau/freelance/humana-boutique" && ./humana.sh; echo; read -p "Appuyez sur Entrée pour fermer…"'
+Icon=/home/liline/Bureau/freelance/humana-boutique/public/brand/fleur.png
+Terminal=true
+Categories=Utility;
+StartupNotify=true
